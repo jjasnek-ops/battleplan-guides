@@ -36,7 +36,7 @@
     "share": "Share",
     "copyLink": "Copy link",
     "copied": "Copied!",
-    "consentText": "We use cookies for analytics and ads to keep this site free.",
+    "consentText": "Optional Google Analytics cookies help us understand visits. You can read every guide without accepting.",
     "accept": "Accept",
     "decline": "Decline",
     "consentTitle": "Cookies",
@@ -405,12 +405,19 @@
           ]
         },
         {
-          "heading": "Analytics, ads and comments",
+          "heading": "Optional analytics",
           "paragraphs": [
-            "Advertising, Google Analytics, Cloudflare Web Analytics and embedded comments are disabled in the initial configuration. If enabled later, this policy will be updated and applicable consent controls will be used."
+            "Google Analytics is configured to measure page views, engagement and how visitors reach the guides. Its script loads only after you accept the cookie banner. Google can then process page URLs, interactions and device or browser information, and analytics cookies can distinguish returning visits.",
+            "Declining leaves analytics unloaded and does not restrict the guides. Your choice is stored in this browser. To choose again, clear this site's browser storage and reload it. We do not ask for account details or send player credentials to analytics.",
+            "Advertising, Cloudflare Web Analytics and embedded comments remain disabled."
           ],
           "items": [],
-          "links": []
+          "links": [
+            {
+              "label": "Google privacy policy",
+              "href": "https://policies.google.com/privacy"
+            }
+          ]
         },
         {
           "heading": "Local browser storage",

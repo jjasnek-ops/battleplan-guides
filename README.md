@@ -8,7 +8,7 @@ Canonical site: https://battleplanguides.wiki. Repository: https://github.com/jj
 
 Eight substantive articles cover starting an operation, Zone Orders, supply, combat, unit roles, Army Constructor, officers and the released game's scope. Each article links its official sources and identifies pre-release diary limitations. No purchased-copy testing, numerical unit database, optimum division template or complete mission walkthrough is claimed. Editorial diagrams are original schematics.
 
-Published content lives in `src/content/wiki/en/`. Site identity is in `src/config/site.ts`; English interface/home/legal copy is in `src/locales/en.json`. Advertising, comments and analytics are disabled unless legitimate identifiers are deliberately configured. The source and native content controls support a low-maintenance site; they do not automatically rewrite or publish unverified game facts.
+Published content lives in `src/content/wiki/en/`. Site identity is in `src/config/site.ts`; English interface/home/legal copy is in `src/locales/en.json`. Advertising and comments are disabled. The configured GA4 Web stream uses the public measurement ID `G-JC1GM0KG8Z` and loads only after the visitor accepts the native cookie banner. The source and native content controls support a low-maintenance site; they do not automatically rewrite or publish unverified game facts.
 
 ## Development
 
@@ -33,7 +33,7 @@ pnpm check-links
 pnpm check-sitemap http://127.0.0.1:4323
 ```
 
-The last command requires a running preview; choose its actual port. Cloudflare Pages serves `dist/`. Set `SITE_URL=https://battleplanguides.wiki`; `wrangler.toml` and the Astro fallback retain this formal origin. `/sitemap.xml` redirects to `/sitemap-index.xml` in Pages. `/search/` uses native Pagefind and is excluded from indexing.
+The last command requires a running preview; choose its actual port. Cloudflare Pages serves `dist/`. Set `SITE_URL=https://battleplanguides.wiki`; `wrangler.toml` and the Astro fallback retain this formal origin. GA4 also needs `PUBLIC_GA_ID=G-JC1GM0KG8Z` at Astro build time; Wrangler Function bindings alone do not establish that a static page was built with the identifier. Verify the deployed consent loader after a build. `/sitemap.xml` redirects to `/sitemap-index.xml` in Pages. `/search/` uses native Pagefind and is excluded from indexing.
 
 ## Deployment ownership
 
