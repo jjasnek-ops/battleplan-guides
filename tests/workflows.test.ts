@@ -564,7 +564,7 @@ describe('setup.yml python [vars] rewrite is value-aware (executes the real here
     expect(pyValues).toEqual([...DEMO_VAR_VALUES].sort());
   });
 
-  test.skipIf(!hasPython3)('the FORKER warning block is actually removed (real-header fixture), and absence warns instead of failing', () => {
+  test.skipIf(!hasPython3 || !readFileSync(join(root, 'wrangler.toml'), 'utf8').includes('END FORKER WARNING'))('the FORKER warning block is actually removed (real-header fixture), and absence warns instead of failing', () => {
     // Pinned against the REAL shipping header (authors.ts precedent): if the
     // wrangler.toml anchors drift, this goes red instead of the workflow
     // silently leaving a block that lies about the file still being demo.

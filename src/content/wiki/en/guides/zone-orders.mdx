@@ -1,0 +1,64 @@
+---
+title: "Battleplan Zone Orders: Draw, Assign and Adjust a Plan"
+description: "Use Battleplan Regimental Plans, choose Seize Ground or Balanced Hold, read zone predictions and adjust assignments without overextending."
+category: "guides"
+image: '../../../../assets/covers/en-guides-zone-orders.png'
+date: 2026-10-13
+lastModified: 2026-10-13
+gameVersion: "Launch (2026-10)"
+tags: ["planning", "orders", "command"]
+summary: "Draw a Regimental Plan over the ground you want to manage, then inspect each zone's troops and tactic. Seize Ground pushes aggressively; Balanced Hold advances more cautiously. Use the attack and defence predictions to review the allocation, shrink excessive frontage, and reshape boundaries before an advance leaves your force exposed."
+---
+
+import Callout from '~/components/mdx/Callout.astro';
+
+## How do Regimental Plans turn an area into orders?
+
+A Regimental Plan divides a drawn area into zones of responsibility based on the formation's regiments. Inspect the resulting allocation rather than assuming the whole division will concentrate on one point. Zone Orders are an optional command system alongside Timeline orders, and the launch overview confirms their inclusion in the released game.
+
+The official example puts infantry regiments in their own zones and headquarters/support in a reserve area. That example illustrates the division of responsibility; it is not a fixed template for every army. Check the hierarchy in the [Army Constructor](/units/army-constructor/) if the zones do not match the organization you expected.
+
+<Callout type="info" title="Interface scope">The controls below are documented in the May 2026 Zone Orders diary. The launch announcement confirms the system, but exact panel layouts can change. This guide has not been tested in a purchased copy; follow current tutorial prompts and labels if they differ.</Callout>
+
+## Which tactic should you choose for a zone?
+
+Choose a tactic for the behavior you want, then check whether the allocated force can support it. Seize Ground presses forward even when the force is outnumbered or risks overextension. Balanced Hold advances when its flanks are secure and it is not outnumbered. Neither tactic guarantees a successful attack.
+
+| Tactic | Officially described behavior | Decision before execution |
+|---|---|---|
+| Seize Ground | Aggressive territorial advance | Can supporting troops hold the route behind it? |
+| Balanced Hold | Conditional advance with flank and force checks | Does caution fit the objective and remaining time? |
+
+Use the zone's **Tactic** button to change its behavior. A force remaining cautious under Balanced Hold is not, by itself, proof that the plan is broken. Review the surrounding enemy and flank situation before switching to the more aggressive option. See the [combat guide](/guides/combat-guide/) for preparation against fortified ground.
+
+## What do the two prediction bars mean?
+
+Hover over the zone and read the attack and defence predictions separately. In the developer's panel, the upper blue/red bar predicts an attack by that zone's allocated forces; the lower bar predicts defending the area. The panel also reports participating formations and contextual details such as terrain and elevation changes.
+
+These are estimates of different situations, not a victory counter or guaranteed outcome. A zone can look manageable to defend while being expensive to attack. If the attack prediction is poor, inspect enemy preparation and your own specialists before simply drawing a bigger area.
+
+## How do you change troops and frontage?
+
+Improve a weak allocation by adding appropriate troops or reducing the ground those troops must cover. The diary demonstrates left-dragging individual battalions into the receiving zone's panel. It also shows right-dragging a zone edge to reshape it, including while the order is executing. Review the neighboring zone after either change.
+
+1. Hover over the zone that needs attention and read its prediction panel.
+2. Identify an available battalion with a useful role.
+3. **Left-drag the battalion into that zone's panel** to reassign it.
+4. **Right-drag a zone edge** to reduce or reshape the area if the force is spread too far.
+5. Check the area you took troops from; strengthening one zone can weaken another.
+
+The word “EDUCATED” in the diary screenshot is an example zone name. It is not a universal assignment button.
+
+## Why does a drawn plan not mean the advance has started?
+
+Battleplan allows theoretical plans to coexist with an executing plan. The diary marks the executing plan with a rotating gear, so inspect that indicator when the troops appear to follow a different task. Review troop allocation, tactic and frontage on the plan that is actually running before replacing it with another.
+
+Treat an advance as a continuing supply problem as well as an order. Aggressive zones can push beyond support; the [supply guide](/guides/supply-and-logistics/) explains why infantry must hold a corridor behind mobile troops. Use the [beginner checklist](/guides/beginner-guide/) when you need to review deployment prerequisites first.
+
+## Where are these controls documented?
+
+The main source is the developer's Zone Orders explanation, cross-checked with the official launch scope and Army Constructor diary. Those sources confirm the system and its relationship to regiments. They do not establish that every old screenshot, prediction or panel layout remains identical after release; current tutorial instructions take precedence.
+
+- [Zone Orders diary, May 11, 2026](https://steamcommunity.com/games/3743140/announcements/detail/660482877658497850).
+- [Launch systems and changes from the demo, October 2, 2026](https://steamcommunity.com/games/3743140/announcements/detail/713414124781962183).
+- [Army Constructor and regiments, April 14, 2026](https://steamcommunity.com/games/3743140/announcements/detail/538883784384188773).

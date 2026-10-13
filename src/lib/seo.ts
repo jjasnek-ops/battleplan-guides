@@ -293,7 +293,7 @@ export function videoGameJsonLd() {
     url: siteUrl,
     genre: site.game.genre,
     gamePlatform: site.game.platform,
-    publisher: { '@type': 'Organization', name: site.game.developer },
+    publisher: { '@type': 'Organization', name: site.game.publisher ?? site.game.developer },
     ...(site.game.releaseDate ? { datePublished: site.game.releaseDate } : {}),
   };
 }

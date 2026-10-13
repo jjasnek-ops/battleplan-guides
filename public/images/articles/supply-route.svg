@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Battleplan supply route concept</title>
+  <desc id="desc">A fixed supply hub feeds a depot. A protected route connects the depot to divisional headquarters and companies. Movement and combat increase demand.</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#aec495"/></marker></defs>
+  <rect width="1200" height="420" rx="24" fill="#182220"/>
+  <path d="M0 70H1200M0 140H1200M0 210H1200M0 280H1200M0 350H1200M150 0V420M300 0V420M450 0V420M600 0V420M750 0V420M900 0V420M1050 0V420" stroke="#263630"/>
+  <g font-family="Arial,sans-serif" text-anchor="middle">
+    <text x="600" y="53" font-size="26" fill="#f0f1e8">SUPPLY ROUTE — CONCEPTUAL, NOT TO SCALE</text>
+    <rect x="35" y="142" width="220" height="122" rx="12" fill="#31463c" stroke="#aec495"/>
+    <rect x="335" y="142" width="220" height="122" rx="12" fill="#31463c" stroke="#aec495"/>
+    <rect x="635" y="142" width="220" height="122" rx="12" fill="#31463c" stroke="#aec495"/>
+    <rect x="935" y="142" width="230" height="122" rx="12" fill="#31463c" stroke="#aec495"/>
+    <g fill="#f0f1e8" font-size="26"><text x="145" y="186">HUB</text><text x="445" y="186">DEPOT</text><text x="745" y="186">DIVISION HQ</text><text x="1050" y="186">COMPANIES</text></g>
+    <g fill="#c2d0bb" font-size="20"><text x="145" y="227">Fixed source</text><text x="445" y="227">Store + distribute</text><text x="745" y="227">Route matters</text><text x="1050" y="227">Consume supply</text></g>
+    <path d="M265 200H322M565 200H622M865 200H922" stroke="#aec495" stroke-width="5" marker-end="url(#arrow)"/>
+    <path d="M340 295H850" stroke="#aec495" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="595" y="330" fill="#d0d9c7" font-size="22">Keep the corridor held and protected</text>
+    <text x="600" y="382" fill="#aec495" font-size="20">Longer / rougher routes reduce transfer. Moving / fighting increases demand.</text>
+  </g>
+</svg>

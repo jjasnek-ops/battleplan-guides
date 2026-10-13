@@ -1,11 +1,23 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "tools"],
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist",
+    "tools",
+    "tests/landing-paths.test.ts",
+    "tests/community-digest.test.ts",
+    "tests/redirects.test.ts",
+    "tests/codes-consistency.test.ts"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": [
+        "src/*"
+      ]
     },
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#657746" stroke-width="1" stroke-opacity=".25"/></pattern><marker id="a" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#657746" stroke-width="2"/></marker></defs>
+<rect width="1600" height="900" fill="url(#g)"/>
+<g fill="none" stroke="#657746" stroke-width="2" opacity=".4"><path d="M680 0C950 95 750 190 950 290S1390 350 1370 510 1450 720 1600 790"/><path d="M700 0C970 95 775 190 975 290S1410 350 1390 510 1470 720 1620 790"/><path d="M950 50C1230 40 1300 130 1250 235S1030 260 1020 155 1090 95 1180 100"/><path d="M960 30C1260 20 1330 130 1270 255S1010 300 990 165 1060 65 1170 70"/><path d="M1020 620C1160 525 1360 640 1335 740S1060 850 995 775 890 745 1020 620Z"/><path d="M1025 655C1150 555 1320 650 1300 745S1100 810 1030 780 930 750 1025 655Z"/></g>
+<g fill="none" stroke="#657746" stroke-width="6" marker-end="url(#a)"><path d="M1020 460C1170 455 1160 315 1270 300"/><path d="M1180 680C1340 630 1410 550 1415 470"/></g>
+<g stroke="#657746" stroke-width="3" fill="#f4f2e9"><rect x="970" y="425" width="90" height="55"/><path d="M970 425L1060 480M1060 425L970 480"/><rect x="1130" y="650" width="90" height="55"/><ellipse cx="1175" cy="677" rx="26" ry="17"/><rect x="1330" y="260" width="75" height="55"/><path d="M1367 287L1420 235"/></g>
+</svg>

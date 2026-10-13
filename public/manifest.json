@@ -1,11 +1,11 @@
 {
-  "name": "Anvil Quest Wiki",
-  "short_name": "AQ Wiki",
-  "description": "Complete Anvil Quest wiki with boss guides, codes, and tier lists.",
+  "name": "Battleplan Guides",
+  "short_name": "BP Guides",
+  "description": "Unofficial Battleplan guides for Steam: learn orders, command structure, unit roles and logistics using verified game sources.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#f36716",
+  "theme_color": "#657746",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

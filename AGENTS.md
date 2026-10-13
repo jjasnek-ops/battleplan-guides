@@ -1,5 +1,22 @@
 # AGENTS.md
 
+## Battleplan project instructions (take precedence over template defaults)
+
+- This checkout is Battleplan Guides, the English Unofficial Fan Guide for Steam App 3743140.
+- Domain: https://battleplanguides.wiki. Deployment: one GitHub repository and one Cloudflare Pages project named battleplan-guides.
+- Upstream provenance: PNGTRID/AnvilWiki v2.37.0, commit 8109ef105d05f15c2a86783717e18d2aef3a27af. Preserve its MIT license.
+- The user authorized research, content, reversible fixes, GitHub publication, free Pages deployment, DNS binding and live verification without per-stage confirmations.
+- Resume from reports/current-delivery-status.md, execution-log.md, blockers.md and next-actions.md. Research and reports are retained locally and ignored by Git.
+- All important game claims need an evidence-ledger entry. Pre-release and demo sources must retain their date/scope; do not invent current unit statistics, campaign steps, unlocks or achievements.
+- Keyword metrics are estimates with a specific period and geography. Unavailable data is null, never zero. Similarweb source dates must not be described as launch-day data.
+- Preserve native Astro/MDX/Pagefind functionality. Small generic corrections to metadata or configuration hooks are allowed; no large framework rewrite or JS runtime.
+- Complete desktop/mobile sample verification before bulk content. Use the documented Codex browser interface, actual screenshots and visible page content.
+- Ads, comments and analytics stay disabled until legitimate configuration is available. Never save secrets in reports or commits.
+- In deployment, preserve existing unrelated sites and DNS records. Do not claim deployment, domain activation, GSC verification or indexing without evidence.
+- Future dates and schedules use Asia/Shanghai. Do not change review dates simply to make content appear fresh.
+
+The historical upstream notes below are reference instructions. Their demo identity and per-stage approval defaults do not override this project brief.
+
 Workspace instructions for ZCode agents working on AnvilWiki.
 
 ## Repository Purpose

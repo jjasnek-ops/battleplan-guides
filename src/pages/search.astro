@@ -1,0 +1,13 @@
+---
+import LocaleLayout from '~/components/layout/LocaleLayout.astro';
+import { defaultLocale } from '~/i18n/routing';
+import { getUi } from '~/i18n/ui';
+const labels = getUi(defaultLocale).searchPage;
+---
+<LocaleLayout locale={defaultLocale} title={labels.title} description={labels.description} noindex={true}>
+  <section class="mx-auto max-w-3xl py-12">
+    <h1 class="text-3xl font-bold">{labels.title}</h1>
+    <p class="mt-4 text-muted-foreground">{labels.instruction}</p>
+    <button type="button" class="btn-primary mt-6" data-open-search>{labels.button}</button>
+  </section>
+</LocaleLayout>

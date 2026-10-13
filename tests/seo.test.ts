@@ -1,3 +1,6 @@
+import type { Locale } from '~/i18n/routing';
+// Non-installed locale used only as a pure prefix-construction fixture.
+const jaFixture = 'ja' as Locale;
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -116,7 +119,7 @@ describe('SEO helpers', () => {
         categoryLabel: 'ボス一覧',
         title: 'エンバーファング攻略',
         slug: 'emberfang',
-        locale: 'ja',
+        locale: jaFixture,
       });
       expect(json.itemListElement[0].item).toMatch(/\/ja\/$/);
     });
@@ -124,7 +127,7 @@ describe('SEO helpers', () => {
 
   describe('simpleBreadcrumbJsonLd', () => {
     it('emits the Home item with a trailing slash for every locale', () => {
-      for (const locale of ['en', 'ja'] as const) {
+      for (const locale of ['en', jaFixture] as const) {
         const json = simpleBreadcrumbJsonLd({
           pageLabel: 'All Bosses',
           path: '/bosses/',
@@ -182,8 +185,9 @@ describe('SEO helpers', () => {
     });
 
     it('skips the suffix when the title already carries the game name', () => {
-      const t = pageTitle('Anvil Quest Boss Guide');
-      expect(t).toBe('Anvil Quest Boss Guide');
+      const title = `${site.game.name} Unit Guide`;
+      const t = pageTitle(title);
+      expect(t).toBe(title);
     });
 
     it('switches to the short suffix for long titles (>50 chars)', () => {
@@ -194,17 +198,17 @@ describe('SEO helpers', () => {
   });
 
   describe('fallbackDetailPaths', () => {
-    const locales = ['en', 'ja'] as const;
+    const locales = ['en', jaFixture] as const;
     // Coverage shape mirrors astro.config's localeCoverage: "cat/slug" →
     // locales that really have a published MDX.
     const coverage = new Map<string, Set<string>>([
       // English-only article → /ja/ URL is a fallback page.
       ['bosses/stormcaller', new Set(['en'])],
       // Translated in both locales → both URLs are real pages.
-      ['bosses/emberfang', new Set(['en', 'ja'])],
+      ['bosses/emberfang', new Set(['en', jaFixture])],
       // ja-only article → /ja/ is real; en never falls back (no /ja/-owned
       // English URL exists to begin with).
-      ['guides/ja-only', new Set(['ja'])],
+      ['guides/ja-only', new Set([jaFixture])],
       // Nested slug folds into the key after the category.
       ['guides/nested/deep-slug', new Set(['en'])],
       // CJK slug keeps raw filesystem names (sitemap filter decodes first).

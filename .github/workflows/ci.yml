@@ -55,6 +55,10 @@ jobs:
   # (PR #10 ENOENT crash; home-template schema drift crashing the fork's
   # first build). Drives the CLI against a throwaway copy and builds it.
   e2e-template:
+    # This job initializes the upstream demo into a different game. An
+    # initialized fork deliberately preserves its user articles, so that
+    # demo-only destructive scaffold scenario is not applicable here.
+    if: github.repository == 'PNGTRID/AnvilWiki'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

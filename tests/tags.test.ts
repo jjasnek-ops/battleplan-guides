@@ -1,3 +1,6 @@
+import type { Locale } from '~/i18n/routing';
+// Non-installed locale used only as a pure prefix-construction fixture.
+const jaFixture = 'ja' as Locale;
 import { describe, it, expect } from 'vitest';
 import { videoObjectJsonLd, urlListJsonLd, imageObjectJsonLd } from '~/lib/seo';
 import { slugifyTag, tagPath, tagsPath, recentPath } from '~/lib/url';
@@ -31,9 +34,9 @@ describe('tag/recent URL helpers', () => {
     expect(recentPath('en')).toBe('/recent/');
   });
   it('prefixes non-default locales', () => {
-    expect(tagsPath('ja')).toBe('/ja/tags/');
-    expect(tagPath('fire-boss', 'ja')).toBe('/ja/tags/fire-boss/');
-    expect(recentPath('ja')).toBe('/ja/recent/');
+    expect(tagsPath(jaFixture)).toBe('/ja/tags/');
+    expect(tagPath('fire-boss', jaFixture)).toBe('/ja/tags/fire-boss/');
+    expect(recentPath(jaFixture)).toBe('/ja/recent/');
   });
 });
 

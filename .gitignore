@@ -48,6 +48,9 @@ seo-reports/
 # daily ops reports (local automation, never committed)
 reports/
 
+# Local research and browser evidence; retain on disk for recovery.
+research/
+
 # local tool output (review reports etc.)
 out/
 

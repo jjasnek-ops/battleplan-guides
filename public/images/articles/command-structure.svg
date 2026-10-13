@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Simplified command hierarchy</title><desc id="desc">Headquarters leads regiments, which contain battalions and companies. This is an illustrative organization, not a division template.</desc>
+<rect width="1200" height="675" fill="#f4f2e9"/>
+<g font-family="Arial,sans-serif" fill="#25312a"><text x="60" y="75" font-size="18" letter-spacing="4">BATTLEPLAN / COMMAND REFERENCE</text><text x="60" y="132" font-size="40" font-weight="bold">Follow the chain of command</text>
+<g fill="none" stroke="#657746" stroke-width="3"><rect x="405" y="185" width="390" height="95" rx="6"/><path d="M600 280V325M265 325H935M265 325V370M600 325V370M935 325V370"/><rect x="115" y="370" width="300" height="90" rx="6"/><rect x="450" y="370" width="300" height="90" rx="6"/><rect x="785" y="370" width="300" height="90" rx="6"/><path d="M265 460V500M600 460V500M935 460V500"/></g>
+<text x="600" y="223" text-anchor="middle" font-size="20">FORMATION HEADQUARTERS</text><text x="600" y="256" text-anchor="middle" font-size="21" font-weight="bold">Assigned officer</text>
+<text x="265" y="424" text-anchor="middle" font-size="26">Regiment</text><text x="600" y="424" text-anchor="middle" font-size="26">Regiment</text><text x="935" y="424" text-anchor="middle" font-size="26">Support elements</text>
+<text x="265" y="535" text-anchor="middle" font-size="19">Battalions → companies</text><text x="600" y="535" text-anchor="middle" font-size="19">Battalions → companies</text><text x="935" y="535" text-anchor="middle" font-size="19">Inspect attachments</text>
+<text x="60" y="620" font-size="17">Illustrative hierarchy / Not a fixed historical organization or recommended company count</text></g></svg>

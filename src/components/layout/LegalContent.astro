@@ -4,6 +4,8 @@
  * Renders different content based on the `page` prop. English only (per PRD).
  */
 import { site } from '~/config/site';
+import { getUi } from '~/i18n/ui';
+import { defaultLocale } from '~/i18n/routing';
 
 interface Props {
   page: 'about' | 'privacy-policy' | 'terms-of-service' | 'copyright' | 'contact';
@@ -11,10 +13,20 @@ interface Props {
 const { page } = Astro.props;
 const game = site.game.name;
 const year = new Date().getFullYear();
+const custom = getUi(defaultLocale).legalPages?.[page];
 ---
 
+{custom && custom.sections.map((section) => (
+  <>
+    {section.heading && <h2>{section.heading}</h2>}
+    {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    {section.items.length > 0 && <ul>{section.items.map((item) => <li>{item}</li>)}</ul>}
+    {section.links.length > 0 && <ul>{section.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}</ul>}
+  </>
+))}
+
 {
-  page === 'about' && (
+  !custom && page === 'about' && (
     <>
       <p>
         {site.name} is a fan-made community wiki dedicated to {game}, a {site.game.genre} on{' '}
@@ -52,7 +64,7 @@ const year = new Date().getFullYear();
 }
 
 {
-  page === 'privacy-policy' && (
+  !custom && page === 'privacy-policy' && (
     <>
       <p>
         This privacy policy describes how {site.name} ("we", "us", or "our") handles information
@@ -113,7 +125,7 @@ const year = new Date().getFullYear();
 }
 
 {
-  page === 'terms-of-service' && (
+  !custom && page === 'terms-of-service' && (
     <>
       <p>By accessing {site.name}, you agree to the following terms of service.</p>
       <h2>Use of Content</h2>
@@ -154,7 +166,7 @@ const year = new Date().getFullYear();
 }
 
 {
-  page === 'copyright' && (
+  !custom && page === 'copyright' && (
     <>
       <h2>Copyright Notice</h2>
       <p>
@@ -184,7 +196,7 @@ const year = new Date().getFullYear();
 }
 
 {
-  page === 'contact' && (
+  !custom && page === 'contact' && (
     <>
       {/* h2, not h1 — LegalPage already renders the page H1 (single-H1 rule). */}
       <h2>Contact {site.name}</h2>

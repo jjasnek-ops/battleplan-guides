@@ -1,0 +1,75 @@
+---
+title: "Battleplan Army Constructor: Officers, Weight and Requisition"
+description: "Prepare a deployable Battleplan formation with an assigned officer, valid headquarters connections and a logistical weight your mission allows."
+category: "units"
+image: '../../../../assets/covers/en-units-army-constructor.png'
+date: 2026-10-13
+lastModified: 2026-10-13
+gameVersion: "Launch (2026-10)"
+tags: ["units", "command", "planning", "requisition"]
+summary: "A deployable formation needs a headquarters with an assigned officer and a total logistical weight within the mission's limit. Requisition buys or changes formations; it does not replace deployment capacity. Inspect the hierarchy, add companies for a specific missing role, and recheck the weight after restructuring instead of relying on a universal division template."
+---
+
+import Callout from '~/components/mdx/Callout.astro';
+
+## What makes a formation ready to deploy?
+
+A formation is ready only when its command and mission requirements are satisfied. The official Army Constructor diary requires an officer attached to a headquarters and describes total logistical weight at the top headquarters. Check that weight against the mission's deployment allowance before treating a purchased or newly assembled division as usable.
+
+Use the [beginner checklist](/guides/beginner-guide/) for the broader pre-mission workflow. The constructor answers how your army is organized; the briefing answers what this mission lets you bring.
+
+<Callout type="info" title="Version scope">This workflow uses the April 2026 Army Constructor and February Officers diaries. The launch overview confirms an expanded constructor. Specific panel artwork may differ in the release; current mission prompts and tooltips take precedence. No tested “best template” is claimed.</Callout>
+
+## How are requisition and logistical weight different?
+
+Requisition is the budget used to recruit formations, recruit some officers and change company counts. Logistical weight measures how much formation capacity a mission permits you to deploy. You can afford a force that is too heavy for a mission, so read both constraints after a change instead of using either one alone.
+
+| Display or resource | Question it answers | Action to take |
+|---|---|---|
+| Requisition | Can I pay for this addition? | Check the current recruitment or company-change cost. |
+| Top headquarters weight | How heavy is this connected formation? | Recheck after adding or moving companies. |
+| Mission weight allowance | How much can enter this scenario? | Compare the force you intend to deploy with the limit. |
+| Officer assignment | Does the formation have its required leader? | Assign the officer to the appropriate headquarters. |
+
+The diary's example weights are illustrations, not a standard capacity for every mission. Requisition is earned by completing missions according to that source; exact rewards and current recruitment prices are not listed here.
+
+## How should you restructure a division?
+
+Change the hierarchy to serve a specific battlefield task, then inspect which headquarters commands each subordinate unit. The diary describes dragging the connecting white lines to connect or disconnect units and spending requisition to add or remove companies. Regiments affect Regimental Plans, so restructuring can change more than the constructor's visual layout.
+
+1. Identify the headquarters and officer leading the formation.
+2. Inspect its regiments, battalions and companies.
+3. Name the capability missing from the intended task using the [unit role table](/units/unit-types/).
+4. Use the hierarchy connections to redistribute suitable units, or recruit the missing element.
+5. Check the connected command structure and displayed logistical weight.
+6. Review the resulting regiment allocation when you create [Zone Orders](/guides/zone-orders/).
+
+The free initial infantry division described by the diary contains infantry, anti-tank guns, artillery, engineers, anti-aircraft guns and headquarters. That is a starting example, not evidence that every custom division must contain fixed company counts.
+
+## When do historical formations and officers become available?
+
+The developer describes historical formations and their commanding officers becoming recruitable after the relevant missions have been completed. The constructor also supports custom formations with editable organization, names and insignia. Choose from what your current recruitment panel actually offers; historical presence alone does not prove a unit is already unlocked in your campaign.
+
+The source describes recruitment across the US, UK and Canadian forces. This guide does not invent a mission-by-mission unlock list. For leadership benefits and risks, see [officers and command](/units/officers-and-command/).
+
+## What should you check if the mission will not start?
+
+First inspect officer assignment, connected headquarters and the mission's weight allowance. A February demo discussion includes a developer answer telling players to assign an officer and move a formation into the initial deployment selection. That is useful evidence of prerequisites, but it is not proof that today's screen uses the identical drag target.
+
+| Check | What to verify |
+|---|---|
+| Officer recruited but not assigned | Is the officer actually attached to the leading HQ? |
+| Formation altered | Are subordinate units connected to the intended HQ? |
+| Force expanded | Does the displayed weight still fit this mission? |
+| Constructor ready, mission empty | Has the force been selected for this mission using its current prompts? |
+
+If those conditions are satisfied and the current tutorial still cannot progress, record the game version, mission and visible prompt before reporting a bug. Do not assume an old demo “Reset plan” workaround applies to release.
+
+## Which records support these steps?
+
+The constructor and officer diaries establish the command and weight rules; the launch announcement establishes that the constructor continued into release with changes. The linked community answer concerns the February demo. Use it as historical context for preparation problems while following the current interface for the actual deployment action.
+
+- [Army Constructor diary, April 14, 2026](https://steamcommunity.com/games/3743140/announcements/detail/538883784384188773).
+- [Officers diary, February 19, 2026](https://steamcommunity.com/games/3743140/announcements/detail/534375749569741926).
+- [Launch overview, October 2, 2026](https://steamcommunity.com/games/3743140/announcements/detail/713414124781962183).
+- [Demo first-mission discussion with developer replies](https://steamcommunity.com/app/3743140/discussions/0/756178376553819529/).

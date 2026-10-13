@@ -49,7 +49,7 @@ const samePagePathFor = (loc: Locale) => {
       class="flex items-center gap-2 font-bold text-foreground"
       aria-label={site.name}
     >
-      <Icon name="lucide:hammer" class="h-6 w-6 text-nav" />
+      <Icon name={site.logoIcon ?? 'lucide:hammer'} class="h-6 w-6 text-nav" />
       <span class="hidden sm:inline">{site.shortName}</span>
     </a>
 
@@ -88,7 +88,7 @@ const samePagePathFor = (loc: Locale) => {
           aria-label={landingLink.ariaLabel}
           title={landingLink.ariaLabel}
         >
-          <Icon name="lucide:hammer" class="h-5 w-5 shrink-0" />
+          <Icon name={site.logoIcon ?? 'lucide:hammer'} class="h-5 w-5 shrink-0" />
           <span class="hidden whitespace-nowrap lg:inline">{landingLink.label}</span>
         </a>
       )}
@@ -99,6 +99,7 @@ const samePagePathFor = (loc: Locale) => {
       {/* Mobile menu */}
       <details class="relative md:hidden">
         <summary
+          aria-label={nav.menu}
           class="inline-flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-md text-foreground transition hover:bg-muted"
         >
           <Icon name="lucide:menu" class="h-5 w-5" />
@@ -156,7 +157,7 @@ const samePagePathFor = (loc: Locale) => {
               href={landingLink.href}
               class="mt-1 flex items-center gap-2 border-t border-border px-3 py-2 text-sm text-muted-foreground transition hover:bg-muted hover:text-nav"
             >
-              <Icon name="lucide:hammer" class="h-4 w-4" />
+              <Icon name={site.logoIcon ?? 'lucide:hammer'} class="h-4 w-4" />
               <span>{landingLink.label}</span>
             </a>
           )}

@@ -2,8 +2,9 @@
 import LegalPage from '~/components/layout/LegalPage.astro';
 import LegalContent from '~/components/layout/LegalContent.astro';
 import { defaultLocale } from '~/i18n/routing';
+import { getUi } from '~/i18n/ui';
 ---
 
-<LegalPage locale={defaultLocale} title="Copyright" lastUpdated="2026-08-11">
+<LegalPage locale={defaultLocale} title="Copyright" lastUpdated={getUi(defaultLocale).legalPages.copyright.updated}>
   <LegalContent page="copyright" />
 </LegalPage>
