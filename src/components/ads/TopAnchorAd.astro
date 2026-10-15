@@ -1,0 +1,60 @@
+---
+import { Icon } from 'astro-icon/components';
+import AdsterraSlot from './AdsterraSlot.astro';
+import { currentSharedStrings } from '~/lib/shared-ui';
+import { trackingRequiresConsent } from '~/config/monetization';
+const show = !!import.meta.env.PUBLIC_ADSTERRA_SLOT_STICKY_320X50;
+const waitForConsent =
+  trackingRequiresConsent &&
+  !!(import.meta.env.PUBLIC_GA_ID || import.meta.env.PUBLIC_ADSENSE_CLIENT);
+const shared = currentSharedStrings(Astro.currentLocale);
+---
+
+{
+  show && (
+    <aside
+      id="top-anchor-ad"
+      class="top-anchor-ad"
+      data-pagefind-ignore
+      data-wait-for-consent={String(waitForConsent)}
+      hidden={waitForConsent}
+    >
+      <div class="relative mx-auto h-full max-w-7xl">
+      <span class="block h-[22px] text-center text-[10px] uppercase leading-[22px] tracking-wider text-muted-foreground">
+          {shared.adLabel}
+        </span>
+        <AdsterraSlot name="sticky-320x50" width={320} height={50} label={false} />
+        <button
+          type="button"
+          data-dismiss-top-ad
+          aria-label={shared.closeAd}
+          class="absolute right-2 top-0 rounded border bg-background p-1 text-muted-foreground hover:bg-muted"
+        >
+          <Icon name="lucide:x" class="h-3 w-3" />
+        </button>
+      </div>
+    </aside>
+  )
+}
+<script>
+  import { CONSENT_STORAGE_KEY, CONSENT_ACCEPTED_EVENT } from '~/lib/shared-ui';
+  const anchor = document.getElementById('top-anchor-ad');
+  if (anchor) {
+    const reveal = () => {
+      anchor.hidden = false;
+      document.documentElement.classList.add('has-top-ad');
+    };
+    if (anchor.dataset.waitForConsent === 'true') {
+      try {
+        if (localStorage.getItem(CONSENT_STORAGE_KEY) === 'accepted') reveal();
+      } catch {
+        /* No stored choice. */
+      }
+      document.addEventListener(CONSENT_ACCEPTED_EVENT, reveal, { once: true });
+    } else reveal();
+    anchor.querySelector('[data-dismiss-top-ad]')?.addEventListener('click', () => {
+      document.documentElement.classList.remove('has-top-ad');
+      anchor.remove();
+    });
+  }
+</script>

@@ -40,12 +40,17 @@ PUBLIC_CF_BEACON_TOKEN = ""
 #PUBLIC_ADSENSE_SLOT_INCONTENT = ""
 # Adsterra — for each slot you enable, also create public/ads/<name>.html with
 # the snippet from the Adsterra dashboard (pattern: docs/ads.md 「广告位怎么挂」).
-#PUBLIC_ADSTERRA_SLOT_SIDEBAR_300X250 = ""
-#PUBLIC_ADSTERRA_SLOT_INCONTENT_728X90 = ""
-#PUBLIC_ADSTERRA_SLOT_NATIVE_BANNER = ""
-#PUBLIC_ADSTERRA_SLOT_STICKY_320X50 = ""
-#PUBLIC_ADSTERRA_SLOT_SIDEBAR_160X300 = ""
-#PUBLIC_ADSTERRA_SLOT_SIDEBAR_160X600 = ""
-# Public measurement identifier; analytics loads only after consent.
+PUBLIC_ADSTERRA_SLOT_SIDEBAR_300X250 = "f757c65d00462b079bfd86a43ce0b06f"
+PUBLIC_ADSTERRA_SLOT_INCONTENT_728X90 = "9524f44e55ffdfcd545440e7d6daad08"
+PUBLIC_ADSTERRA_SLOT_NATIVE_BANNER = "89c89bdab9e2a12d9a8dbe1d80fa74ff"
+PUBLIC_ADSTERRA_SLOT_STICKY_320X50 = "e77d0ea2684a1d8ea4bdc97c0909b625"
+PUBLIC_ADSTERRA_SLOT_SIDEBAR_160X300 = "6becad9709b8130501c12ff416ce20ca"
+PUBLIC_ADSTERRA_SLOT_SIDEBAR_160X600 = "ebb891272fa3ca09535dec31ede52a4b"
+# Public measurement identifier; publisher selected automatic loading.
 PUBLIC_GA_ID = "G-JC1GM0KG8Z"
 #PUBLIC_GSC_VERIFICATION = ""
+
+PUBLIC_ADSTERRA_SLOT_FOOTER_468X60 = "325cce553f9bb37ed24f41746bceddfa"
+
+# Explicit publisher choice: ads and GA4 load without a consent prompt.
+PUBLIC_REQUIRE_CONSENT = "false"

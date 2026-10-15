@@ -36,7 +36,7 @@
     "share": "Share",
     "copyLink": "Copy link",
     "copied": "Copied!",
-    "consentText": "Optional Google Analytics cookies help us understand visits. You can read every guide without accepting.",
+    "consentText": "Google Analytics and advertising help us measure visits and support this site.",
     "accept": "Accept",
     "decline": "Decline",
     "consentTitle": "Cookies",
@@ -381,7 +381,7 @@
       ]
     },
     "privacy-policy": {
-      "updated": "2026-10-13",
+      "updated": "2026-10-15",
       "sections": [
         {
           "heading": "",
@@ -405,11 +405,11 @@
           ]
         },
         {
-          "heading": "Optional analytics",
+          "heading": "Analytics",
           "paragraphs": [
-            "Google Analytics is configured to measure page views, engagement and how visitors reach the guides. Its script loads only after you accept the cookie banner. Google can then process page URLs, interactions and device or browser information, and analytics cookies can distinguish returning visits.",
-            "Declining leaves analytics unloaded and does not restrict the guides. Your choice is stored in this browser. To choose again, clear this site's browser storage and reload it. We do not ask for account details or send player credentials to analytics.",
-            "Advertising, Cloudflare Web Analytics and embedded comments remain disabled."
+            "Google Analytics loads automatically when you visit this site and measures page views, engagement and how visitors reach the guides. Google may process page URLs, interactions, device or browser information and approximate location. Analytics cookies can distinguish returning visits.",
+            "This site does not display a consent prompt before loading analytics or advertising. You can manage cookies and third-party requests through your browser settings or blocking tools. We do not ask for player account details or send player credentials to analytics.",
+            "Cloudflare Web Analytics and embedded comments remain disabled."
           ],
           "items": [],
           "links": [
@@ -420,9 +420,23 @@
           ]
         },
         {
+          "heading": "Advertising",
+          "paragraphs": [
+            "Adsterra advertising is enabled and loads automatically in visible advertising placements. Adsterra and its advertising partners may use cookies, device or browser information, IP address and browsing interactions to deliver and measure ads. Advertising is labelled and is separate from our editorial guides.",
+            "You can read the guides without interacting with an advertisement. External advertisements lead to third-party websites with their own policies."
+          ],
+          "items": [],
+          "links": [
+            {
+              "label": "Adsterra privacy policy",
+              "href": "https://adsterra.com/privacy-policy/"
+            }
+          ]
+        },
+        {
           "heading": "Local browser storage",
           "paragraphs": [
-            "Theme choice, consent choice, search and page feedback may use browser storage. On-site search uses a locally served Pagefind index. There is no server-side search account."
+            "Theme choice, search and page feedback may use browser storage. On-site search uses a locally served Pagefind index. There is no server-side search account. A previously stored cookie-banner choice does not control automatic analytics or advertising loading in the current site configuration."
           ],
           "items": [],
           "links": []

@@ -1,9 +1,8 @@
 /**
  * Consent-literal contract — CONSENT_STORAGE_KEY / CONSENT_ACCEPTED_EVENT
  * are canonically exported from src/lib/shared-ui.ts but DUPLICATED as
- * string literals in three component scripts: CookieConsent's bundled
- * module cannot see frontmatter imports, and AdsterraSlot / MobileAnchorAd
- * run untranspiled is:inline scripts that cannot import at all.
+ * string literals in two legacy component scripts. AdsterraSlot and the
+ * top anchor now import the canonical values in bundled scripts.
  *
  * fail-closed direction: any single-sided rename means consumers can no
  * longer read the stored choice and the accept event never fires — ads
@@ -24,11 +23,6 @@ const CONSUMERS: { file: string; keyRe: RegExp; eventRe: RegExp }[] = [
     file: 'src/components/layout/CookieConsent.astro',
     keyRe: /const KEY = '([^']+)'/,
     eventRe: /const ACCEPTED_EVENT = '([^']+)'/,
-  },
-  {
-    file: 'src/components/ads/AdsterraSlot.astro',
-    keyRe: /var CONSENT_KEY = '([^']+)'/,
-    eventRe: /var CONSENT_EVENT = '([^']+)'/,
   },
   {
     file: 'src/components/ads/MobileAnchorAd.astro',

@@ -11,12 +11,15 @@
  * Pages should wrap themselves in LocaleLayout (which wraps this), not call this directly.
  */
 import '~/styles/globals.css';
+import '~/styles/advertising.css';
 import { site, siteUrl } from '~/config/site';
 import { defaultLocale, locales, OG_LOCALE_MAP, type Locale } from '~/i18n/routing';
 import { organizationJsonLd } from '~/lib/seo';
 import JsonLd from '~/components/seo/JsonLd.astro';
 import CookieConsent from './CookieConsent.astro';
 import { getUi } from '~/i18n/ui';
+import { trackingRequiresConsent } from '~/config/monetization';
+import TopAnchorAd from '~/components/ads/TopAnchorAd.astro';
 
 interface Props {
   title: string;
@@ -127,6 +130,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID as string | undefined;
 const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN as string | undefined;
 const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION as string | undefined;
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT as string | undefined;
+const topAdVisible = !!import.meta.env.PUBLIC_ADSTERRA_SLOT_STICKY_320X50 && !trackingRequiresConsent;
 
 // Consent banner labels: wiki locales derive them from the locale JSON
 // (hardcoded English fallbacks for a locale whose JSON hasn't been translated
@@ -152,7 +156,7 @@ const privacyLabel = consent?.privacyLabel ?? footerStrings.privacyPolicy ?? 'Pr
 ---
 
 <!doctype html>
-<html lang={mainLocale} class="scroll-smooth">
+<html lang={mainLocale} class:list={['scroll-smooth', { 'has-top-ad': topAdVisible }]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -239,13 +243,11 @@ const privacyLabel = consent?.privacyLabel ?? footerStrings.privacyPolicy ?? 'Pr
     {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
 
     {/*
-      Analytics / AdSense are injected DYNAMICALLY (consent-gated).
-      BaseLayout only defines the loader; CookieConsent.astro calls it after
-      the visitor accepts. See GDPR note in AGENTS.md. No tracking env vars
-      → this block renders nothing → zero JS.
+      The explicit publisher mode selects immediate loading or a consent gate.
+      Empty tracking IDs still emit no tracker loader.
     */}
     {(gaId || adsenseClient) && (
-      <script is:inline define:vars={{ gaId, adsenseClient }}>
+      <script is:inline define:vars={{ gaId, adsenseClient, trackingRequiresConsent }}>
         window.__awLoadTrackers = () => {
           if (window.__awTrackersLoaded) return;
           window.__awTrackersLoaded = true;
@@ -271,6 +273,7 @@ const privacyLabel = consent?.privacyLabel ?? footerStrings.privacyPolicy ?? 'Pr
             document.head.appendChild(s);
           }
         };
+        if (!trackingRequiresConsent) window.__awLoadTrackers();
       </script>
     )}
 
@@ -332,9 +335,10 @@ const privacyLabel = consent?.privacyLabel ?? footerStrings.privacyPolicy ?? 'Pr
     </script>
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
+    <TopAnchorAd />
     <slot />
     {/* Consent banner — only rendered when tracking env vars are set. */}
-    {(gaId || adsenseClient) && (
+    {trackingRequiresConsent && (gaId || adsenseClient) && (
       <CookieConsent
         labels={{
           title: consentLabels.title,

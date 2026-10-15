@@ -1,0 +1,16 @@
+---
+import AdsterraSlot from './AdsterraSlot.astro';
+interface Props {
+  leaderboard?: boolean;
+}
+const { leaderboard = true } = Astro.props;
+---
+
+<div class="mx-auto w-full max-w-7xl px-4" data-pagefind-ignore>
+  {
+    leaderboard && (
+      <AdsterraSlot name="incontent-728x90" width={728} height={90} minViewportWidth={768} />
+    )
+  }
+  <AdsterraSlot name="footer-468x60" width={468} height={60} minViewportWidth={768} />
+</div>

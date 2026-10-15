@@ -14,6 +14,7 @@
 - Ads, comments and analytics stay disabled until legitimate configuration is available. Never save secrets in reports or commits.
 - In deployment, preserve existing unrelated sites and DNS records. Do not claim deployment, domain activation, GSC verification or indexing without evidence.
 - Future dates and schedules use Asia/Shanghai. Do not change review dates simply to make content appear fresh.
+- 2026-10-15 publisher update: the user supplied seven Adsterra snippets and explicitly enabled ads and GA4 without a consent prompt. Honor `PUBLIC_REQUIRE_CONSENT="false"` and the legitimate IDs in `wrangler.toml`; do not restore the old opt-in configuration or disabled-ads state from historical launch reports. Keep labelled, fitting placements, one load per unit/page and current privacy disclosure.
 
 The historical upstream notes below are reference instructions. Their demo identity and per-stage approval defaults do not override this project brief.
 
@@ -112,7 +113,7 @@ pnpm dev              # dev server, http://localhost:4321
 pnpm build            # includes Content schema validation — fails on bad frontmatter; postbuild indexes Pagefind search
 pnpm typecheck        # astro check (0 errors expected)
 pnpm lint             # ESLint (eslint-plugin-astro)
-pnpm test             # Vitest — 24 suites (url, seo, tags, i18n-smoke, content-utils, handbook, workflows, covers, consent, affiliates, prompt, apply-template, sync-codes, community-digest, today, redirects, changelog, agents-consistency, routing-flags, landing-paths, home-ui, indexnow, codes-consistency, content-links)
+pnpm test             # Vitest — 25 suites (url, seo, tags, i18n-smoke, content-utils, handbook, workflows, covers, consent, affiliates, prompt, apply-template, sync-codes, community-digest, today, redirects, changelog, agents-consistency, routing-flags, landing-paths, home-ui, indexnow, codes-consistency, content-links, ad-visibility)
 pnpm test:e2e         # apply-template real-mode E2E (git archive → scratch copy → pipe answers → assert shape → build; CI job e2e-template runs it; tests the COMMITTED tree)
 pnpm check-config     # scripts/check-config.ts — nav/locale 3-place consistency
 pnpm new-locale       # scripts/new-locale.ts — scaffold a new language

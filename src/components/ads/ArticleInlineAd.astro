@@ -1,0 +1,20 @@
+---
+import AdsterraSlot from './AdsterraSlot.astro';
+---
+
+<div id="article-inline-ad" data-pagefind-ignore>
+  <AdsterraSlot name="sidebar-300x250" width={300} height={250} maxViewportWidth={767} />
+</div>
+<script is:inline>
+  // Insert the already-rendered slot before the deferred ad loader runs.
+  // The MDX text, source references and editorial dates stay intact.
+  (function () {
+    var body = document.querySelector('[data-article-body]');
+    var ad = document.getElementById('article-inline-ad');
+    if (!body || !ad) return;
+    var paragraphs = Array.prototype.filter.call(body.children, function (node) {
+      return node.tagName === 'P';
+    });
+    if (paragraphs[1]) paragraphs[1].insertAdjacentElement('afterend', ad);
+  })();
+</script>

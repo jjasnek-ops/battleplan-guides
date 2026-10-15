@@ -1,138 +1,143 @@
 ---
-/**
- * AdsterraSlot — an Adsterra ad unit mounted in a sandboxed iframe.
- *
- * Adsterra banner scripts all configure themselves through the shared
- * `window.atOptions` global, so two units inlined on one page clobber each
- * other (slot B renders with slot A's config). Every unit therefore lives in
- * its own static html file under `public/ads/` — `<name>.html`, holding
- * exactly the snippet from the Adsterra dashboard (Ad Units → GET CODE) —
- * and this component mounts it in an iframe. The sandbox omits
- * `allow-top-navigation` (some mobile creatives try to navigate the whole
- * page away) — but with `allow-scripts` + `allow-same-origin` both present
- * (creatives need them to render), the sandbox is layout containment and
- * navigation friction, NOT a hard security boundary against a malicious
- * creative; true isolation would take a separate origin. Full rationale:
- * docs/ads.md 「广告位怎么挂（独立文件 + iframe 隔离）」.
- *
- * Gated on PUBLIC_ADSTERRA_SLOT_<NAME> (name upper-cased, hyphens become
- * underscores — `sidebar-300x250` → `PUBLIC_ADSTERRA_SLOT_SIDEBAR_300X250`).
- * Empty = nothing rendered, the same env contract as the AdSense slots. The
- * html file itself is not build inputs — also create it in `public/ads/` or
- * the iframe 404s as an empty box.
- *
- * Consent-gated like GA/AdSense: when the cookie banner is active (its own
- * render condition in BaseLayout = PUBLIC_GA_ID or PUBLIC_ADSENSE_CLIENT
- * set), the iframe mounts WITHOUT src (data-src holds the real URL) and a
- * small ES2018 inline script promotes data-src → src only after the visitor
- * has consented — either a stored 'accepted' in CookieConsent's localStorage
- * flag, or the `aw:consent-accepted` event it dispatches on accept. Declined
- * or unchosen → the unit never loads, matching the banner's promise that
- * ads wait for consent. No tracking env vars → banner never renders → the
- * iframe loads directly (out-of-box zero-consent behavior unchanged).
- */
-interface Props {
-  /** Slot name = html filename stem under public/ads/ (e.g. `sidebar-300x250`). */
-  name: string;
-  /** Creative width in px — keep in sync with the unit's Adsterra size. */
-  width: number;
-  /** Creative height in px — keep in sync with the unit's Adsterra size. */
-  height: number;
-  /** Set to `false` to hide the "Advertisement" label (labels default on). */
-  label?: boolean;
-  /**
-   * Hide below md (fixed-size creatives clip inside a narrower iframe —
-   * a 728 creative in a ~375px viewport shows ~47% and an inner scrollbar).
-   * Pair a hideOnMobile banner with the responsive native-banner, which
-   * fills any width. Same pattern as StickyBanner's `hidden md:block`.
-   */
-  hideOnMobile?: boolean;
-}
-
+/** Each unit owns its atOptions in public/ads/<name>.html. No top-navigation permission. */
 import { currentSharedStrings } from '~/lib/shared-ui';
+import { trackingRequiresConsent } from '~/config/monetization';
 
-const { name, width, height, label = true, hideOnMobile = false } = Astro.props;
-const envKey = `PUBLIC_ADSTERRA_SLOT_${name.replace(/-/g, '_').toUpperCase()}`;
-const show = !!import.meta.env[envKey];
-// Same env condition under which BaseLayout renders CookieConsent — when
-// either is set the banner (and its consent promise) is live on every page.
-const consentBannerActive = !!(
-  (import.meta.env.PUBLIC_GA_ID as string | undefined) ||
-  (import.meta.env.PUBLIC_ADSENSE_CLIENT as string | undefined)
-);
-const iframeSrc = `/ads/${name}.html`;
-const sharedStrings = currentSharedStrings(Astro.currentLocale);
-const adLabel = sharedStrings.adLabel ?? 'Advertisement';
+interface Props {
+  name: string;
+  /** Zero means a responsive Native unit. Fixed creatives are never scaled. */
+  width: number;
+  height: number;
+  label?: boolean;
+  hideOnMobile?: boolean;
+  minViewportWidth?: number;
+  maxViewportWidth?: number;
+  minViewportHeight?: number;
+}
+const {
+  name,
+  width,
+  height,
+  label = true,
+  hideOnMobile = false,
+  minViewportWidth = hideOnMobile ? 768 : 0,
+  maxViewportWidth = 100000,
+  minViewportHeight = 0,
+} = Astro.props;
+const show = !!import.meta.env[`PUBLIC_ADSTERRA_SLOT_${name.replace(/-/g, '_').toUpperCase()}`];
+const consentBannerActive =
+  trackingRequiresConsent &&
+  !!(import.meta.env.PUBLIC_GA_ID || import.meta.env.PUBLIC_ADSENSE_CLIENT);
+const adLabel = currentSharedStrings(Astro.currentLocale).adLabel ?? 'Advertisement';
 ---
+
 {
   show && (
-    <>
-      <div
-        class:list={[
-          'my-8 flex-col items-center justify-center',
-          hideOnMobile ? 'hidden md:flex' : 'flex',
-        ]}
-      >
-        {label && (
-          <span class="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">{adLabel}</span>
-        )}
-        <iframe
-          src={consentBannerActive ? undefined : iframeSrc}
-          data-src={consentBannerActive ? iframeSrc : undefined}
-          data-adsterra-defer={consentBannerActive ? '1' : undefined}
-          style={`width:100%;max-width:${width}px;height:${height}px;border:0`}
-          loading="lazy"
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-          title={adLabel}
-        />
-      </div>
-      {consentBannerActive && (
-        <script is:inline>
-          /* ES2018 only (no optional chaining / nullish coalescing / optional
-             catch binding) — runs untranspiled in the HTML, old webviews parse
-             it. Consent-gated deferred load: promotes data-src → src on every
-             pending Adsterra iframe once the visitor has consented. Declined
-             or unchosen → never loads (same contract as __awLoadTrackers for
-             GA/AdSense). Idempotent: each slot ships one copy of this script;
-             only iframes still carrying data-adsterra-defer are touched.
-             Event + storage key mirror src/lib/shared-ui.ts (inline scripts
-             can't import; tests/consent.test.ts pins the duplicates). */
-          (function () {
-            var CONSENT_KEY = 'aw-cookie-consent';
-            var CONSENT_EVENT = 'aw:consent-accepted';
-            var activate = function () {
-              var pending = document.querySelectorAll('iframe[data-adsterra-defer]');
-              for (var i = 0; i < pending.length; i++) {
-                var frame = pending[i];
-                var src = frame.getAttribute('data-src');
-                if (src) {
-                  frame.src = src;
-                }
-                frame.removeAttribute('data-adsterra-defer');
-                frame.removeAttribute('data-src');
-              }
-            };
-            var wire = function () {
-              var stored = null;
-              try {
-                stored = localStorage.getItem(CONSENT_KEY);
-              } catch (e) {
-                /* storage unavailable — treat as no consent yet */
-              }
-              if (stored === 'accepted') {
-                activate();
-                return;
-              }
-              document.addEventListener(CONSENT_EVENT, activate);
-            };
-            if (document.readyState === 'loading') {
-              document.addEventListener('DOMContentLoaded', wire);
-            } else {
-              wire();
-            }
-          })();
-        </script>
+    <div
+      class="adsterra-slot not-prose"
+      data-ad-unit={name}
+      data-ad-width={width}
+      data-ad-min-width={minViewportWidth}
+      data-ad-max-width={maxViewportWidth}
+      data-ad-min-height={minViewportHeight}
+      data-ad-requires-consent={String(consentBannerActive)}
+      data-pagefind-ignore
+      hidden
+    >
+      {label && (
+        <span class="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+          {adLabel}
+        </span>
       )}
-    </>
+      <iframe
+        data-src={`/ads/${name}.html`}
+        width={width || undefined}
+        height={height}
+        style={width ? `width:${width}px;height:${height}px` : `width:100%;height:${height}px`}
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        title={adLabel}
+      />
+    </div>
   )
 }
+<script>
+  import { CONSENT_STORAGE_KEY, CONSENT_ACCEPTED_EVENT } from '~/lib/shared-ui';
+  import { canLoadAd } from '~/lib/ad-visibility';
+  const loadedUnits = new Set<string>();
+  let accepted = false;
+  try {
+    accepted = localStorage.getItem(CONSENT_STORAGE_KEY) === 'accepted';
+  } catch {
+    /* Automatic mode does not depend on storage. */
+  }
+  const refreshers: Array<() => void> = [];
+  document.addEventListener(CONSENT_ACCEPTED_EVENT, () => {
+    accepted = true;
+    refreshers.forEach((refresh) => refresh());
+  });
+  document.querySelectorAll<HTMLElement>('[data-ad-unit]').forEach((slot) => {
+    const frame = slot.querySelector('iframe');
+    const parent = slot.parentElement;
+    const unit = slot.dataset.adUnit;
+    if (!frame || !parent || !unit) return;
+    let inView = false;
+    const dimensions = () => {
+      const style = getComputedStyle(parent);
+      return {
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        containerWidth: Math.max(
+          0,
+          parent.clientWidth -
+            parseFloat(style.paddingLeft || '0') -
+            parseFloat(style.paddingRight || '0'),
+        ),
+        creativeWidth: Number(slot.dataset.adWidth),
+        minViewportWidth: Number(slot.dataset.adMinWidth),
+        maxViewportWidth: Number(slot.dataset.adMaxWidth),
+        minViewportHeight: Number(slot.dataset.adMinHeight),
+        requiresConsent: slot.dataset.adRequiresConsent === 'true',
+        accepted,
+        inView,
+      };
+    };
+    const refresh = () => {
+      const state = dimensions();
+      slot.hidden = !canLoadAd({ ...state, accepted: true, requiresConsent: false, inView: true });
+      if (!canLoadAd(state) || frame.hasAttribute('src')) return;
+      if (loadedUnits.has(unit)) {
+        slot.hidden = true;
+        return;
+      }
+      loadedUnits.add(unit);
+      frame.src = frame.dataset.src ?? '';
+      frame.dataset.adLoaded = 'true';
+    };
+    refreshers.push(refresh);
+    refresh();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entries) => {
+          inView = entries.some((entry) => entry.isIntersecting);
+          refresh();
+        },
+        { threshold: 0.01 },
+      ).observe(slot);
+    } else {
+      inView = true;
+      refresh();
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(refresh).observe(parent);
+    window.addEventListener('resize', refresh, { passive: true });
+  });
+  window.addEventListener('message', (event) => {
+    if (event.origin !== window.location.origin || event.data?.type !== 'adsterra:resize') return;
+    const height = Number(event.data.height);
+    if (!Number.isFinite(height) || height < 40 || height > 1600) return;
+    document
+      .querySelectorAll<HTMLIFrameElement>('[data-ad-unit="native-banner"] iframe')
+      .forEach((frame) => {
+        if (event.source === frame.contentWindow) frame.style.height = `${Math.ceil(height)}px`;
+      });
+  });
+</script>

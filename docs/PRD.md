@@ -945,6 +945,8 @@ export function getUi(locale: Locale) {
 
 ### 10.1 设计原则
 
+> Battleplan 项目覆盖（2026-10-15）：站主已明确启用七个 Adsterra 单元及自动 GA4；`PUBLIC_REQUIRE_CONSENT="false"` 跳过同意横幅。顶部 320×50、首页 Native/内容流、文章手机正文位/宽屏侧栏与页脚布局见 README 和 docs/ads.md。下述开箱默认行为继续保留为上游参考，不是本项目当前运行状态。
+
 **核心**：Google AdSense 集成——3 个广告位各一个 AdSense slot，环境变量驱动，key 为空时组件 `return null` 不渲染（保 Lighthouse 4×100 开箱契约）。
 
 - AdSense loader 脚本由 `BaseLayout.astro` 在 `<head>` 注入，仅当 `PUBLIC_ADSENSE_CLIENT` 有值时加载。

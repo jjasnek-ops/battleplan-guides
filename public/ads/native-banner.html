@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Advertisement</title><style>html,body{margin:0;padding:0;background:transparent}body{overflow:hidden}iframe{border:0}</style></head><body>
+<script async="async" data-cfasync="false" src="https://bicea.org/21/89c89bdab9e2a12d9a8dbe1d80fa74ff"></script>
+<div id="container-89c89bdab9e2a12d9a8dbe1d80fa74ff"></div>
+<script>
+(function () {
+  var container = document.getElementById('container-89c89bdab9e2a12d9a8dbe1d80fa74ff');
+  var lastHeight = 0;
+  var report = function () {
+    var height = Math.ceil(container.getBoundingClientRect().height);
+    if (height >= 40 && height <= 1600 && height !== lastHeight) {
+      lastHeight = height;
+      parent.postMessage({type:'adsterra:resize', height:height}, location.origin);
+    }
+  };
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(report).observe(container);
+  new MutationObserver(report).observe(container, {childList:true, subtree:true});
+  window.addEventListener('load', report);
+})();
+</script>
+</body></html>

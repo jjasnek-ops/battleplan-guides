@@ -8,7 +8,7 @@ Canonical site: https://battleplanguides.wiki. Repository: https://github.com/jj
 
 Eight substantive articles cover starting an operation, Zone Orders, supply, combat, unit roles, Army Constructor, officers and the released game's scope. Each article links its official sources and identifies pre-release diary limitations. No purchased-copy testing, numerical unit database, optimum division template or complete mission walkthrough is claimed. Editorial diagrams are original schematics.
 
-Published content lives in `src/content/wiki/en/`. Site identity is in `src/config/site.ts`; English interface/home/legal copy is in `src/locales/en.json`. Advertising and comments are disabled. The configured GA4 Web stream uses the public measurement ID `G-JC1GM0KG8Z` and loads only after the visitor accepts the native cookie banner. The source and native content controls support a low-maintenance site; they do not automatically rewrite or publish unverified game facts.
+Published content lives in `src/content/wiki/en/`. Site identity is in `src/config/site.ts`; English interface/home/legal copy is in `src/locales/en.json`. The publisher enabled Adsterra advertising and automatic GA4 measurement (`G-JC1GM0KG8Z`) on 2026-10-15. `PUBLIC_REQUIRE_CONSENT="false"` in `wrangler.toml` removes the consent prompt and loads analytics automatically; visible, fitting ad units load without a stored consent choice. Comments remain disabled. The source and native content controls support a low-maintenance site; they do not automatically rewrite or publish unverified game facts.
 
 ## Development
 
@@ -33,7 +33,11 @@ pnpm check-links
 pnpm check-sitemap http://127.0.0.1:4323
 ```
 
-The last command requires a running preview; choose its actual port. Cloudflare Pages serves `dist/`. Set `SITE_URL=https://battleplanguides.wiki`; `wrangler.toml` and the Astro fallback retain this formal origin. GA4 also needs `PUBLIC_GA_ID=G-JC1GM0KG8Z` at Astro build time; Wrangler Function bindings alone do not establish that a static page was built with the identifier. Verify the deployed consent loader after a build. `/sitemap.xml` redirects to `/sitemap-index.xml` in Pages. `/search/` uses native Pagefind and is excluded from indexing.
+The last command requires a running preview; choose its actual port. Cloudflare Pages serves `dist/`. Set `SITE_URL=https://battleplanguides.wiki`; `wrangler.toml` and the Astro fallback retain this formal origin. GA4 also needs `PUBLIC_GA_ID=G-JC1GM0KG8Z` at Astro build time; Wrangler Function bindings alone do not establish that a static page was built with the identifier. Verify the deployed automatic loader after a build. `/sitemap.xml` redirects to `/sitemap-index.xml` in Pages. `/search/` uses native Pagefind and is excluded from indexing.
+
+## Advertising layout
+
+Seven publisher snippets are kept in separate `public/ads/*.html` files so their `atOptions` globals cannot collide. Each unit loads at most once per page and only when its actual placement enters view; fixed creatives are not shrunk. The 320×50 top anchor reserves space for navigation and can be closed. Home has a responsive Native unit below the hero, a 300×250 / 728×90 placement between vertical guide cards, and a 468×60 footer unit. Articles have mobile 300×250 after the second body paragraph, 728×90 + 468×60 footer units and 160px side rails when a >=1700px viewport has space. The 600px rail additionally requires >=780px height. A missing/blocked third-party fill does not establish impressions or revenue. See `docs/ads.md` for the project override and retained upstream references.
 
 ## Deployment ownership
 

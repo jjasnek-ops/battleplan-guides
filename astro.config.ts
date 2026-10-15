@@ -5,11 +5,27 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { parseEnv } from 'node:util';
 
 import { locales, defaultLocale } from './src/i18n/routing';
 import { CONTENT_TYPES } from './src/config/navigation';
 import { site as siteConfig } from './src/config/site';
 import { fallbackDetailPaths } from './src/lib/fallback-paths';
+
+// Pages runtime bindings alone do not set Astro's build-time public env.
+// These flat string assignments also follow dotenv syntax; use Node's parser
+// and expose only the explicitly public variables from the [vars] section.
+const wranglerPath = path.resolve('wrangler.toml');
+if (fs.existsSync(wranglerPath)) {
+  const vars =
+    fs
+      .readFileSync(wranglerPath, 'utf8')
+      .split(/^\[vars\][ \t]*\r?$/m)[1]
+      ?.split(/^\[/m)[0] ?? '';
+  for (const [key, value] of Object.entries(parseEnv(vars))) {
+    if (key.startsWith('PUBLIC_') || key === 'SITE_URL') process.env[key] = value;
+  }
+}
 
 /**
  * Build a map of page path → lastmod ISO date, read from MDX frontmatter
@@ -97,7 +113,8 @@ function buildLastmodMap(
       const rel = path.relative(base, p).replace(/\.mdx$/, '');
       const [loc, cat, ...rest] = rel.split(path.sep);
       const slugPath = rest.join('/');
-      const articlePath = loc === defaultLocale ? `/${cat}/${slugPath}` : `/${loc}/${cat}/${slugPath}`;
+      const articlePath =
+        loc === defaultLocale ? `/${cat}/${slugPath}` : `/${loc}/${cat}/${slugPath}`;
       // Same true-spelling rule as the draft check above (inline comments
       // included): a `noindex: True` page must not ship in the sitemap it
       // asked out of.
@@ -175,7 +192,10 @@ function buildLastmodMap(
         if (!entry.endsWith('.md')) continue;
         const src = fs.readFileSync(path.join(dir, entry), 'utf8');
         const fm = extractFrontmatter(src);
-        const iso = fm.match(/^updated:\s*(.+)$/m)?.[1]?.trim().replace(/['"]/g, '');
+        const iso = fm
+          .match(/^updated:\s*(.+)$/m)?.[1]
+          ?.trim()
+          .replace(/['"]/g, '');
         if (!iso) continue;
         const date = new Date(iso);
         if (Number.isNaN(date.getTime())) continue;

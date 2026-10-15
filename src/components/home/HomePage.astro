@@ -28,6 +28,7 @@ import { type Locale } from '~/i18n/routing';
 import { getUi, type HomeUi } from '~/i18n/ui';
 import { getRecentEntries, parseEntryId } from '~/lib/content';
 import { localizePath, listPath, detailPath, recentPath } from '~/lib/url';
+import AdsterraSlot from '~/components/ads/AdsterraSlot.astro';
 
 interface Props {
   locale: Locale;
@@ -82,18 +83,33 @@ function trendingLabel(link: QuickLink): string {
   description={meta.description}
   alternates={alternates}
   jsonLd={jsonLd}
+  footerAds="compact"
 >
   {/* ─────────────────────────────── Hero ─────────────────────────────── */}
-  <section class="relative flex min-h-[52vh] items-center overflow-hidden border-b border-border md:min-h-[68vh]">
-    {hero.backgroundImage && (
-      <img src={hero.backgroundImage} alt={hero.backgroundAlt} width="1600" height="900" aria-hidden="true" class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20" />
-    )}
-    {/* Subtle theme-color gradient backdrop — gives the hero a visual anchor
-        without requiring an image asset. Sits behind the watermark. */}
+  <section
+    class="relative flex min-h-[52vh] items-center overflow-hidden border-b border-border md:min-h-[68vh]"
+  >
+    {
+      hero.backgroundImage && (
+        <img
+          src={hero.backgroundImage}
+          alt={hero.backgroundAlt}
+          width="1600"
+          height="900"
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
+        />
+      )
+    }
+    {
+      /* Subtle theme-color gradient backdrop — gives the hero a visual anchor
+        without requiring an image asset. Sits behind the watermark. */
+    }
     <div
       aria-hidden="true"
-      class="pointer-events-none absolute inset-0 bg-gradient-to-br from-nav/8 via-transparent to-transparent"
-    />
+      class="from-nav/8 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-transparent"
+    >
+    </div>
     {/* Faint game-name watermark — pure CSS, no image asset required. */}
     <span
       aria-hidden="true"
@@ -136,17 +152,15 @@ function trendingLabel(link: QuickLink): string {
   </section>
 
   {/* Trailer — only renders when a videoId is configured. */}
-  {hero.videoId && (
-    <VideoSection videoId={hero.videoId} title={`${site.game.name} ${shared.gameTrailer}`} />
-  )}
+  <AdsterraSlot name="native-banner" width={0} height={240} />
+  {
+    hero.videoId && (
+      <VideoSection videoId={hero.videoId} title={`${site.game.name} ${shared.gameTrailer}`} />
+    )
+  }
 
   {/* ───────────────────────────── Quick Start ────────────────────────── */}
-  <QuickStart
-    locale={locale}
-    badge={start.badge}
-    title={start.title}
-    cards={start.cards}
-  />
+  <QuickStart locale={locale} badge={start.badge} title={start.title} cards={start.cards} />
 
   {/* ───────────────────── Recent Updates + Trending ───────────────────── */}
   <section class="section border-t border-border">
@@ -155,28 +169,47 @@ function trendingLabel(link: QuickLink): string {
       <div class="lg:col-span-2">
         <div class="flex items-baseline justify-between">
           <h2 class="text-2xl font-bold">{updates.title}</h2>
-          <a href={recentPath(locale)} class="text-sm text-foreground hover:text-nav hover:underline"
-            >{shared.browseAll}</a
+          <a
+            href={recentPath(locale)}
+            class="text-sm text-foreground hover:text-nav hover:underline">{shared.browseAll}</a
           >
         </div>
-        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <div class="mt-4 grid gap-4">
           {
             recent.length === 0 ? (
               <p class="text-sm text-muted-foreground">{shared.noArticles}</p>
             ) : (
-              recent.map((entry) => {
+              recent.map((entry, index) => {
                 const parsed = parseEntryId(entry.id);
                 if (!parsed) return null;
                 return (
-                  <a href={detailPath(parsed.category, parsed.slug, locale)} class="card p-4">
-                    <p class="text-xs uppercase tracking-wider text-muted-foreground">
-                      {parsed.category}
-                    </p>
-                    <h3 class="mt-1 font-semibold leading-snug">{entry.data.title}</h3>
-                    <p class="mt-1 line-clamp-2 text-sm text-muted-foreground">
-                      {entry.data.description}
-                    </p>
-                  </a>
+                  <Fragment>
+                    <a href={detailPath(parsed.category, parsed.slug, locale)} class="card p-4">
+                      <p class="text-xs uppercase tracking-wider text-muted-foreground">
+                        {parsed.category}
+                      </p>
+                      <h3 class="mt-1 font-semibold leading-snug">{entry.data.title}</h3>
+                      <p class="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                        {entry.data.description}
+                      </p>
+                    </a>
+                    {index === 0 && (
+                      <div>
+                        <AdsterraSlot
+                          name="sidebar-300x250"
+                          width={300}
+                          height={250}
+                          maxViewportWidth={1279}
+                        />
+                        <AdsterraSlot
+                          name="incontent-728x90"
+                          width={728}
+                          height={90}
+                          minViewportWidth={1280}
+                        />
+                      </div>
+                    )}
+                  </Fragment>
                 );
               })
             )
@@ -185,36 +218,40 @@ function trendingLabel(link: QuickLink): string {
       </div>
 
       {/* Trending — 1/3 width sidebar list. */}
-      {trendingLinks.length > 0 && (
-        <aside>
-          <p class="text-sm font-semibold uppercase tracking-wider text-foreground">{popular.badge}</p>
-          <h2 class="mt-1 text-2xl font-bold">{popular.title}</h2>
-          <ul class="mt-4 space-y-2">
-            {trendingLinks.map((link: QuickLink) => {
-              const href = trendingHref(link);
-              const label = trendingLabel(link);
-              return (
-                <li>
-                  {href ? (
-                    <a
-                      href={href}
-                      class="flex items-center gap-2 rounded-md border bg-card p-3 text-sm font-medium transition hover:border-nav/50"
-                    >
-                      <Icon name="lucide:trending-up" class="h-4 w-4 shrink-0 text-nav" />
-                      <span class="leading-snug">{label}</span>
-                    </a>
-                  ) : (
-                    <div class="flex items-center gap-2 rounded-md border bg-card p-3 text-sm font-medium">
-                      <Icon name="lucide:trending-up" class="h-4 w-4 shrink-0 text-nav" />
-                      <span class="leading-snug">{label}</span>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
-      )}
+      {
+        trendingLinks.length > 0 && (
+          <aside>
+            <p class="text-sm font-semibold uppercase tracking-wider text-foreground">
+              {popular.badge}
+            </p>
+            <h2 class="mt-1 text-2xl font-bold">{popular.title}</h2>
+            <ul class="mt-4 space-y-2">
+              {trendingLinks.map((link: QuickLink) => {
+                const href = trendingHref(link);
+                const label = trendingLabel(link);
+                return (
+                  <li>
+                    {href ? (
+                      <a
+                        href={href}
+                        class="flex items-center gap-2 rounded-md border bg-card p-3 text-sm font-medium transition hover:border-nav/50"
+                      >
+                        <Icon name="lucide:trending-up" class="h-4 w-4 shrink-0 text-nav" />
+                        <span class="leading-snug">{label}</span>
+                      </a>
+                    ) : (
+                      <div class="flex items-center gap-2 rounded-md border bg-card p-3 text-sm font-medium">
+                        <Icon name="lucide:trending-up" class="h-4 w-4 shrink-0 text-nav" />
+                        <span class="leading-snug">{label}</span>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
+        )
+      }
     </div>
   </section>
 
